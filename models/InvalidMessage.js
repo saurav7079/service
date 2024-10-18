@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define the schema for storing invalid messages
-const InvalidMessageSchema = new mongoose.Schema({
+const invalidMessageSchema = new mongoose.Schema({
     company: {
         type: String,
         required: true,
@@ -9,19 +8,18 @@ const InvalidMessageSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: true,
+        required: true
     },
     message: {
         type: String,
-        required: true,
+        required: true
     },
     reason: {
         type: String,
-        required: true,  // This field explains why the data is invalid
+        required: true
     }
-}, { timestamps: true });  // Timestamps for createdAt and updatedAt fields
+}, { timestamps: true });
 
-// Create a model for invalid messages
-const InvalidMessage = mongoose.model('InvalidMessage', InvalidMessageSchema);
+const InvalidMessage = mongoose.model('InvalidMessage', invalidMessageSchema);
 
 module.exports = InvalidMessage;

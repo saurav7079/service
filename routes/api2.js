@@ -1,8 +1,8 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-const Message = require('../models/Message');  // Model for valid messages
-const InvalidMessage = require('../models/InvalidMessage');  // Model for invalid messages
+const Message = require('../models/Message');  
+const InvalidMessage = require('../models/InvalidMessage'); 
 
 const retryDelay = 60000; // 1 minute
 const maxRetries = 10;
@@ -13,15 +13,15 @@ router.post('/filterData', async (req, res) => {
 
     // Check if data is valid based on some criteria
     if (data.company !== "apple") {
-        // Data is invalid, save it in the InvalidMessage collection
+        // Data is invalid, save it in the InvalidData collection
         try {
-            const invalidMessage = new InvalidMessage({
+            const InvalidData = new InvalidData({
                 company: data.company,
                 location: data.location,
                 message: data.message,
-                reason: 'Validation'
+                reason: 'Validation failed'
             });
-            await invalidMessage.save();
+            await InvalidData.save();
 
             return res.status(400).json({ message: 'Data is invalid and saved to the invalid collection.' });
         } catch (error) {
@@ -30,12 +30,13 @@ router.post('/filterData', async (req, res) => {
         }
     }
 
-    // Function to send valid data to API 3
+
     const sendDataToApi3 = async () => {
         try {
             // Send valid data to API 3
             const response = await axios.post('http://localhost:3000/api3/receiveData', data);
-            console.log('Data sent to API 3 successfully:', response.data);
+
+            // console.log('Data sent to API 3 successfully:', response.data);
             res.status(200).json({ message: 'Valid data sent to API 3' });
         } catch (error) {
             console.error('Error sending data to API 3:', error);
@@ -50,7 +51,6 @@ router.post('/filterData', async (req, res) => {
         }
     };
 
-    // Send valid data to API 3
     sendDataToApi3();
 });
 

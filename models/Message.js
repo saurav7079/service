@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the schema for storing messages
 const MessageSchema = new mongoose.Schema({
     company: {
         type: String,
@@ -18,7 +17,6 @@ const MessageSchema = new mongoose.Schema({
    
 },{timestamps:true});
 
-// Create a model for the schema
 const Message = mongoose.model('Message', MessageSchema);
 
 module.exports = Message;
